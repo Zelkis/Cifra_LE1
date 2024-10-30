@@ -4,7 +4,7 @@ import Entities.CifraDeslocamento;
 import Entities.CifraTransposicao;
 import Entities.QuebraCifraDeslocamento;
 import Entities.QuebraCifraTransposicao;
-
+import Entities.QuebraCifraTransposicao2;
 
 public class Main {
 
