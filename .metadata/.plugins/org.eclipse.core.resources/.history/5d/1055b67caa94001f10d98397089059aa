@@ -1,0 +1,46 @@
+package main;
+
+import Entities.CifraDeslocamento;
+import Entities.CifraTransposicao;
+import Entities.QuebraCifraDeslocamento;
+import Entities.QuebraCifraTransposicao;
+import Entities.QuebraCifraTransposicao2;
+
+public class Main {
+
+	public static void main(String[] args) {
+		// mensagem de teste
+		String msg = "ola tudo bem";
+		// exemplo cifrando a mensagem de acordo com a cifra de César
+		String msgCifrada =CifraDeslocamento.Cifrar(msg, 3);
+		System.out.println(msgCifrada);
+		// Quebra a cifra baseando-se na distribuição de frequências da língua portuguesa
+		String quebra = QuebraCifraDeslocamento.quebrarPorFrequencia(msgCifrada);
+		System.out.println(quebra);
+		// Retorna a chave da quebra acima
+		System.out.printf("Chave : %d",QuebraCifraDeslocamento.getKey());
+		System.out.println("");
+		// Quebra a cifra na força bruta
+		QuebraCifraDeslocamento.quebraForcaBruta(msgCifrada);
+		// Exemplo de mensagem cifrada por transposição por colunas utilizando a chave megabuck
+		String msg2 = "pleasetransferonemilliondollarstomyswissbankaccountsixtwotwo";
+		String key = "megabuck";
+		String msgTransposta=CifraTransposicao.transporMsg(msg2, key);
+		System.out.println(msgTransposta);
+		// Tentativa de quebra da cifra de transposição por colunas usando outra mensagem em portugues
+		String msg3 = "comovai";
+		String key2 = "ola";
+		String msgTransposta2 = CifraTransposicao.transporMsg(msg3, key2);
+		System.out.println(msgTransposta2);
+		String quebraTransposicao = QuebraCifraTransposicao.quebraCifra(msgTransposta2);
+		System.out.println(quebraTransposicao);
+		// Outro metódo de transposição criado
+		String msgTransposta3 = CifraTransposicao.TransporMsg2(msg3);
+		System.out.println(msgTransposta3);
+		String quebraTransposicao2 = QuebraCifraTransposicao2.quebraCifraTransposicao(msgTransposta3,4);
+		System.out.println(quebraTransposicao2);
+		
+
+	}
+
+}

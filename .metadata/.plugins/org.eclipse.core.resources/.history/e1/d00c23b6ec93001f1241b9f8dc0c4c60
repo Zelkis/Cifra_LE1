@@ -1,0 +1,21 @@
+package main;
+
+import Entities.CifraDeslocamento;
+import Entities.QuebraCifraDeslocamento;
+
+public class Main {
+
+	public static void main(String[] args) {
+		String r = " sjfkas akdfjak adsljflka";
+		r =r.replace(" ", "");
+		System.out.println(r);
+		System.out.println(2%3);
+		String msg = "ola tudo bem";
+		String msgCifrada =CifraDeslocamento.Cifrar(msg, 3);
+		System.out.println(msgCifrada);
+		String quebra = QuebraCifraDeslocamento.quebrarPorFrequencia(msgCifrada);
+		System.out.println(quebra);
+
+	}
+
+}

@@ -1,0 +1,20 @@
+package Entities;
+
+
+import java.util.List;
+// Gera todas as permutações de uma palavra por recursão
+public class PermutacoesPalavra {
+	 public static void gerarPermutacoes(String prefixo, String sufixo, List<String> resultado) {
+	        int n = sufixo.length();
+	        if (n == 0) {
+	            resultado.add(prefixo);
+	        } else {
+	            for (int i = 0; i < n; i++) {
+	                gerarPermutacoes(prefixo + sufixo.charAt(i), 
+	                                 sufixo.substring(0, i) + sufixo.substring(i + 1, n), 
+	                                 resultado);
+	            }
+	        }
+	    }
+	
+}

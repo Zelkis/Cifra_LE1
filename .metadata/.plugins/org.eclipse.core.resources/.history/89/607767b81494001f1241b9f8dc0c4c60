@@ -1,0 +1,49 @@
+package Entities;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+public class CifraTransposicao {
+	public static String transporMsg(String msg, String key) {
+		List<List<String>> matrizCaracteres = new ArrayList<List<String>>();
+		List<String> alfabeto = new ArrayList<>();
+		List<String> linha = new ArrayList<String>();
+	        for (char letra = 'a'; letra <= 'z'; letra++) {
+	            alfabeto.add(String.valueOf(letra));
+	        }
+
+		msg = msg.replaceAll(" ","");
+		int cont = 0;
+		for(char c : msg.toCharArray()) {
+			if(cont < key.length()) {
+				linha.add(String.valueOf(c));
+				cont++;
+			}else {
+			if(linha.size()!=key.length()) {
+				for(String letra: alfabeto) {
+					if(linha.size()!=key.length()) {
+						linha.add(letra);
+					}else {break;}
+				}
+			}
+			List<String> linhaCopia = new ArrayList<String>(linha);
+			matrizCaracteres.add(linhaCopia);
+			linha.clear();
+			linha.add(String.valueOf(c));
+			cont=0;
+			}}
+		List<String> listaKey = new ArrayList<String>(Arrays.asList(key.split("")));
+		Collections.sort(listaKey);
+		String stringTransposta="";
+		for (String ch : listaKey) {
+			int indice = key.indexOf(ch);
+			for(List<String> ls : matrizCaracteres) {
+				stringTransposta+=ls.get(indice);
+			}	
+		}
+		return stringTransposta;
+		
+	}
+}

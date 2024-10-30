@@ -1,0 +1,17 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class PermutacoesPalavra {
+    // Função para gerar permutações recursivamente
+    public static void permutar(String prefixo, String sufixo, List<String> resultado) {
+        int n = sufixo.length();
+        if (n == 0) {
+            resultado.add(prefixo);
+        } else {
+            for (int i = 0; i < n; i++) {
+                permutar(prefixo + sufixo.charAt(i), sufixo.substring(0, i) + sufixo.substring(i + 1, n), resultado);
+            }
+        }
+    }
+
+}

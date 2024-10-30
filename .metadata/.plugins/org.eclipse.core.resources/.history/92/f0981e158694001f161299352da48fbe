@@ -1,0 +1,43 @@
+package Entities;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class PermutacoesPalavra {
+	public static List<String> gerarPermutacoes(String palavra) {
+        List<String> resultado = new ArrayList<>();
+        char[] caracteres = palavra.toCharArray();
+        int n = caracteres.length;
+        int[] indices = new int[n];
+        Arrays.fill(indices, 0);
+
+        resultado.add(new String(caracteres));
+
+        int i = 0;
+        while (i < n) {
+            if (indices[i] < i) {
+                if (i % 2 == 0) {
+                    trocar(caracteres, 0, i);
+                } else {
+                    trocar(caracteres, indices[i], i);
+                }
+                resultado.add(new String(caracteres));
+                indices[i]++;
+                i = 0;
+            } else {
+                indices[i] = 0;
+                i++;
+            }
+        }
+
+        return resultado;
+    }
+
+    private static void trocar(char[] array, int a, int b) {
+        char temp = array[a];
+        array[a] = array[b];
+        array[b] = temp;
+    }
+
+}

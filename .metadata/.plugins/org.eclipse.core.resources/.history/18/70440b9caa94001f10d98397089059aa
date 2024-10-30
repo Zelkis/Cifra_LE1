@@ -1,0 +1,82 @@
+package Entities;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class QuebraCifraTransposicao2 {
+
+   
+    public static String quebraCifraTransposicao(String textoCifrado, int numColunas) {
+        int numLinhas = (int) Math.ceil((double) textoCifrado.length() / numColunas);
+        
+        // Passo 2: dividir o texto em colunas
+        List<String> colunas = new ArrayList<>();
+        for (int i = 0; i < numColunas; i++) {
+            StringBuilder coluna = new StringBuilder();
+            for (int j = i; j < textoCifrado.length(); j += numColunas) {
+                coluna.append(textoCifrado.charAt(j));
+            }
+            colunas.add(coluna.toString());
+        }
+
+        // Gera todas as permutações possíveis das colunas
+        List<List<String>> permutacoes = permutar(colunas);
+        
+        for (List<String> permutacao : permutacoes) {
+            String textoTentativa = reconstruirTexto(permutacao, numLinhas);
+
+            if (textoTemSentido(textoTentativa)) {
+                return textoTentativa;  // Retorna o texto decifrado
+            }
+        }
+        
+        return null;  // Retorna null se nenhuma permutação fez sentido
+    }
+
+    // Função para permutar as colunas
+    private static List<List<String>> permutar(List<String> colunas) {
+        List<List<String>> resultado = new ArrayList<>();
+        permutarAuxiliar(colunas, 0, resultado);
+        return resultado;
+    }
+
+    private static void permutarAuxiliar(List<String> colunas, int indice, List<List<String>> resultado) {
+        if (indice == colunas.size()) {
+            resultado.add(new ArrayList<>(colunas));
+            return;
+        }
+        for (int i = indice; i < colunas.size(); i++) {
+            Collections.swap(colunas, i, indice);
+            permutarAuxiliar(colunas, indice + 1, resultado);
+            Collections.swap(colunas, i, indice);
+        }
+    }
+
+    // Função para reconstruir o texto a partir de uma permutação de colunas
+    private static String reconstruirTexto(List<String> permutacao, int numLinhas) {
+        StringBuilder reconstruido = new StringBuilder();
+        for (int linha = 0; linha < numLinhas; linha++) {
+            for (String coluna : permutacao) {
+                if (linha < coluna.length()) {
+                    reconstruido.append(coluna.charAt(linha));
+                }
+            }
+        }
+        return reconstruido.toString();
+    }
+
+    // Função simples para verificar se o texto possui palavras comuns em português
+    private static boolean textoTemSentido(String texto) {
+        String[] palavrasComuns = {"de", "que", "é", "em", "por", "não"};
+        for (String palavra : palavrasComuns) {
+            if (texto.contains(palavra)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+	
+}
+
