@@ -8,7 +8,6 @@ import java.util.Map;
 
 public class QuebraCifraTransposicao {
 	public static Map<String,Double> criaFrequencia(){
-		//Cria um Map em que as chaves são os digramas e trigramas da língua portuguesa e os valores as suas respectivas frequências
 		Map<String,Double> frequencias = new HashMap<String,Double>();
 		frequencias.put("que", 72.29);
 		frequencias.put("ent", 70.23);
@@ -80,95 +79,60 @@ public class QuebraCifraTransposicao {
 		
 	}
 	
-	// Primeiro metódo de tentativa de quebra da msg
+	
 	public static String quebraCifra(String msg) {
-		// Cria uma lista de Strings
 		List<String> lista_permutacoes = new ArrayList<String>();
-		// Pega o menor valor de um tipo double
 		Double valor = Double.MIN_VALUE;
-		// Cria uma String vazia
 		String cifra="";
-		// Gerar todas as permutações da mensagem passada no argumento e as armazenar na lista_permutacoes
 		PermutacoesPalavra.gerarPermutacoes("",msg,lista_permutacoes);
-		// Itera sobre a lista_permutacoes
 		for(String per: lista_permutacoes) {
-			// Calcula a pontuacao de cada String da lista
 			Double pontuacao= calculaPontuacao(per);
-			// Se essa pontuação for mairo que o valor atribui o valor a pontuação e a cifra a string permutada
 			if(pontuacao > valor) {
 				valor = pontuacao;
 				cifra = per;
 			}
 			
 		}
-		// Retorna a cifra
 		return cifra;
 		
 		
 	}
-	// Metódo para calcular a pontuação da mensagem
 	public static Double calculaPontuacao(String msg) {
-		// Cria uma lista de strings com os caracteres da mensagem
 		List<String> lista_caracteres = new ArrayList<String>(Arrays.asList(msg.split("")));
-		// Cria um Map de acordo com o metódo no início da classe
 		Map<String,Double> frequencias = criaFrequencia();
-		// Cria uma String vazia
 		String aux ="";
-		// Cria um Double vazio
 		Double pontuacao = 0.0;
-		// Itera sobre a lista de caracteres
 		for(int i = 0; i<lista_caracteres.size();i++) {
-			// se a soma do valor atual da iteração + 1 for maior do que o tamanho da lista-1 a variável aux recebe a soma dos elementos
-			// Pegados pelo índice de acordo com a equação abaixo
 			if (i+1 > lista_caracteres.size()-1) {
 				 aux = lista_caracteres.get(i-2) + lista_caracteres.get(i-1) + lista_caracteres.get(i);
-				 // Verifica se o trigrama existe no Map
 				 if(frequencias.get(aux) != null) {
-					 // Se existir adiciona a pontuacao a frequencia e quebra o looping
 				pontuacao+=frequencias.get(aux);}
 				 break;
-			} 
-			// Se a soma do valor atual da iteração + 2 for maior do que o tamanho da lista-1 a variável aux recebe a soma dos elementos
-			// pegados pelo índice de acordo com a equação abaixo
-			else if(i+2 > lista_caracteres.size()-1) {
+			} else if(i+2 > lista_caracteres.size()-1) {
 				 aux = lista_caracteres.get(i-1) + lista_caracteres.get(i) + lista_caracteres.get(i+1);
-				 // Verifica se o trigrama existe no Map
 				 if(frequencias.get(aux) != null) {
-					 // Se existir adicioana a variável pontuacao a frequencia quebra o looping
 				 pontuacao+= frequencias.get(aux);}
 				 break;
 			}else {
-				// Se não ocorrer nenhum dos casos acima então os trigramas serão obtidos de acordo com a equação abaixo
 				aux = lista_caracteres.get(i) + lista_caracteres.get(i+1) + lista_caracteres.get(i+2);
-				// Verifica se o trigrama existe no Map
 				if(frequencias.get(aux) != null) {
-					// Se existir adiciona a variável pontuacao a frequencia
 				pontuacao+=frequencias.get(aux);}
 			}
 		}
-		// Itera sobre a lista_caracteres
 		for(int i = 0; i< lista_caracteres.size();i++) {
-			// Se a soma do valor atual +1 for menor que o tamanho da lista-1 então a variável aux recebe a soma dos elementos String 
-			// pegos pelo índice de acordo com a equação abaixo
 			if(i+1 > lista_caracteres.size()-1) {
 				aux = lista_caracteres.get(i-1) + lista_caracteres.get(i);
-				// Verfica se o digrama existe no Map
 				if(frequencias.get(aux)!= null) {
-					// Adiciona a variável pontuacao a respectiva frequencia e quebra o looping
 					pontuacao+=frequencias.get(aux);
 				} break;
 				}
 				else {
-					// Se não for a opção acima a variável aux recebe a soma de Strings pegas pelo índice de acordo com a equação abaixo
 					aux = lista_caracteres.get(i) + lista_caracteres.get(i+1);
-					// Verfica se o digrama existe no Map
 					if(frequencias.get(aux)!= null) {
-						// Se existir adiciona a variável pontuacao sua respectiva frequência
 						pontuacao+=frequencias.get(aux);
 					}
 				}
 			}
-		// Retorna a pontuação
 		
 		return pontuacao;
 	}
