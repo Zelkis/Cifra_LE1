@@ -189,18 +189,11 @@ public class QuebraCifraTransposicao {
 			numeros+=String.valueOf(j);
 					
 			}
-		//Cria uma lista de strings que conterá todas as permutações possíveis das colunas
 		List<String> lista_permutacoes = new ArrayList<String>();
-		// Preenche a lista com essas permutações
 		PermutacoesPalavra.gerarPermutacoes("", numeros, lista_permutacoes);
-		// Itera sobre a lista de permutações
 		for(String per: lista_permutacoes) {
-			// Cria uma string de tentativa
 			String tentativa = "";
 			int cont = 0 ;
-			// Enquanto a tentativa não tiver o tamanho da mensagem pega-se os caracteres do array de acordo com a ordem da permutação
-			// Por exemplo para a combinação 012 supondo a lista [[s,d,s],[d,j,h],[i,o,p]] pega-se primeiro o caracter s, depois o j, depois i
-			// depois pega-se o d, j e depois o o e assim por diante. Ao final teremos uma das possibilidades possíveis de transposição
 			while (tentativa.length()!=msg.length()) {
 				for(char c: per.toCharArray()) {
 					tentativa+=listaCaracteres.get(Integer.valueOf(String.valueOf(c))).get(cont);
@@ -208,7 +201,6 @@ public class QuebraCifraTransposicao {
 				cont++;
 			
 			}
-			// Calcula-se a pontuacao da tentativa usando a distribuição de frequencias da língua portuguesa
 			Double pontuacao = calculaPontuacao(tentativa);
 			if(pontuacao> valor) {
 				valor = pontuacao;
@@ -216,7 +208,7 @@ public class QuebraCifraTransposicao {
 			}
 			
 		}
-		// Retorna a mensagem decifrada
+		
 		return stringDecifrada;
 	
 	}

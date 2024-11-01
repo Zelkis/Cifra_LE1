@@ -153,54 +153,34 @@ public class QuebraCifraTransposicao {
 		
 		return pontuacao;
 	}
-	// Outro metódo para quebrar a cifra por transposição que usa além da mensagem cifrada, uma estimativa do tamanho da chave
-	public static String quebraCifra2(String msg,Integer keyLenght) {
-		// Cria uma lista com os caracteres da mensagem
+	public static String quebraCifra2(String msg,Integer key) {
 		List<String> lista_caracteres_msg = new ArrayList<String>(Arrays.asList(msg.split("")));
-		// String vazia que retornará a mensagem decifrada
 		String stringDecifrada = "";
-		// Cria um valor minímo 
 		Double valor = Double.MIN_VALUE;
-		// Cria uma lista de listas para armazenar as colunas
 		List<List<String>> listaCaracteres = new ArrayList<List<String>>();
-		// Cria uma lista de Strings
 		List<String> caracteres = new ArrayList<String>();
-		// Itera sobre os caracteres da mensagem
 		for(String ch: lista_caracteres_msg) {
-			// Pega as colunas da mensagem transposta. A divisão do tamanho da mensagem pela chave dá o tamanho de cada coluna
-			if(caracteres.size() < Integer.valueOf(msg.length()/keyLenght)) {
+			if(caracteres.size() < Integer.valueOf(msg.length()/key)) {
 				caracteres.add(ch);
 		
 			}else {
-				// Cria uma copia da lista das colunas
 				List<String> caracteresCopia = new ArrayList<String>(caracteres);
 				caracteres.clear();
-				// Adiciona na lista de colunas
 				listaCaracteres.add(caracteresCopia);
-				// Adiciona o primeiro caracter
 				caracteres.add(ch);
 				}
 			}
-		// Adiciona eventuais colunas que não foram adicionadas na iteração acima
 		listaCaracteres.add(caracteres);
 		String numeros ="";
-		// Cria uma String para numerar as colunas de 0 até o tamanho da chave
-		for(int j = 0; j< keyLenght;j++) {
+		for(int j = 0; j< key;j++) {
 			numeros+=String.valueOf(j);
 					
 			}
-		//Cria uma lista de strings que conterá todas as permutações possíveis das colunas
 		List<String> lista_permutacoes = new ArrayList<String>();
-		// Preenche a lista com essas permutações
 		PermutacoesPalavra.gerarPermutacoes("", numeros, lista_permutacoes);
-		// Itera sobre a lista de permutações
 		for(String per: lista_permutacoes) {
-			// Cria uma string de tentativa
 			String tentativa = "";
 			int cont = 0 ;
-			// Enquanto a tentativa não tiver o tamanho da mensagem pega-se os caracteres do array de acordo com a ordem da permutação
-			// Por exemplo para a combinação 012 supondo a lista [[s,d,s],[d,j,h],[i,o,p]] pega-se primeiro o caracter s, depois o j, depois i
-			// depois pega-se o d, j e depois o o e assim por diante. Ao final teremos uma das possibilidades possíveis de transposição
 			while (tentativa.length()!=msg.length()) {
 				for(char c: per.toCharArray()) {
 					tentativa+=listaCaracteres.get(Integer.valueOf(String.valueOf(c))).get(cont);
@@ -208,7 +188,6 @@ public class QuebraCifraTransposicao {
 				cont++;
 			
 			}
-			// Calcula-se a pontuacao da tentativa usando a distribuição de frequencias da língua portuguesa
 			Double pontuacao = calculaPontuacao(tentativa);
 			if(pontuacao> valor) {
 				valor = pontuacao;
@@ -216,7 +195,7 @@ public class QuebraCifraTransposicao {
 			}
 			
 		}
-		// Retorna a mensagem decifrada
+		
 		return stringDecifrada;
 	
 	}
