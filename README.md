@@ -21,3 +21,5 @@ da mensagem tentaremos quebrar da mesma forma que na cifra por deslocamento. Ite
 nesse caso, como não se sabe qual é a chave usada, tentei usar o metódo das permutações. Para a transposição por colunas esse metódo não funciona, pois quando chega na última linha e os caracteres
 não complentam o array, as letras do alfabeto são adicionadas para completa-lo. Deste modo, para o segundo metódo funciona, porém a medida em que se aumenta o número de letras da palavra fica-se
 o algoritmo não aguenta e para.
+
+5- Quebra Cifra por Transposição 2: Para quebrar a cifra por transposição nesse metódo, deve-se estimar o tamanho da chave. Para o algoritmo funcionar em sua melhor perfomace, um bloco try-catch seria o ideal para que se a chave desse erro, ele retornaria. E com isso testa-se todos os valores de tamanho de chave possíveis. A ideia por de trás desse algoritmo é pegar todas as colunas da mensagem em texto e realizar todas as tentativas possíveis para desembaralhar-las, calculando em cada a pontuação de acordo com a distribuição de frequências da língua portuguesa. A tentativa que apresentar a melhor pontuação será a palavra transposta.
